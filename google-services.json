@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "791360157679",
+    "project_id": "football-player-game-880d7",
+    "storage_bucket": "football-player-game-880d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:791360157679:android:068115c55202664506a81a",
+        "android_client_info": {
+          "package_name": "android.package"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "791360157679-afq0oqroj1osofrhrf2q1ncnnp97ug5d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiRRGh7WSZajqhgFg-6rvrN2gV6-Zp7yI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "791360157679-afq0oqroj1osofrhrf2q1ncnnp97ug5d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "791360157679-t8uk5dr22g1peisnu60se21ojftdetee.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": ".ios",
+                "app_store_id": "123456789"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

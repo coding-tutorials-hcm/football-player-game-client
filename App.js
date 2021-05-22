@@ -1,21 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import "react-native-gesture-handler";
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import * as eva from "@eva-design/eva";
+import React, { useEffect, useState } from "react";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import Main from "./screens/MainScreen";
+
+import * as firebase from "firebase";
+import { firebaseConfig } from "./config";
+
+if (!firebase.default.apps.length) {
+  firebase.default.initializeApp(firebaseConfig);
+} else {
+  firebase.default.app();
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  const [isLogin, setIsLogin] = useState(false);
+  useEffect(() => {
+    firebase.default
+      .auth()
+      .onAuthStateChanged((user) =>
+        user ? setIsLogin(true) : setIsLogin(false)
+      );
+  });
+  return (
+    <>
+      <IconRegistry icons={EvaIconsPack} />
+      <ApplicationProvider {...eva} theme={eva.light}>
+        <Main />
+      </ApplicationProvider>
+    </>
+  );
+}
