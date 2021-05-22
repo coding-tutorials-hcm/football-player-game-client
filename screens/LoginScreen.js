@@ -19,8 +19,8 @@ export default function Login() {
   useEffect(() => {});
 
   return (
-    <Layout style={styles.container}>
-      <Layout style={styles.layout}>
+    <Layout style={styles.container} level="4">
+      <Layout style={styles.layout} level="4">
         <Image source={require("../assets/images/logo.png")} />
       </Layout>
       <View style={styles.paddingText}>
@@ -65,14 +65,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: "#E5E5E5",
     padding: 15,
   },
   layout: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#E5E5E5",
   },
   textGray: {
     color: "#455264",
