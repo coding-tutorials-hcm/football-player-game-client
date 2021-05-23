@@ -5,7 +5,7 @@ import axios from "axios";
 // questions
 export const fetchQuestions = () => (dispatch) => {
   dispatch(questionsLoading());
-  return fetch(baseUrl + "questions")
+  return fetch(baseUrl + "questions/2YhMcnj4wAkEa1ZDJTlj")
     .then((response) => {
       if (!response.ok)
         throw Error("Error " + response.status + ": " + response.statusText);
@@ -54,11 +54,9 @@ const addUsers = (users) => ({
 export const fetchTest = (rank) => (dispatch) => {
   dispatch(testLoading());
   return axios
-    .post(baseUrl + `questions/test-exam?rank=${rank}&count=10`)
+    .post(baseUrl + `questions/test-exam?rank=${rank}&count=10`, {})
     .then((response) => {
-      if (!response.ok)
-        throw Error("Error " + response.status + ": " + response.statusText);
-      else return response.json();
+      return response.data;
     })
     .then((test) => dispatch(addTest(test)))
     .catch((error) => dispatch(testFailed(error.message)));

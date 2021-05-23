@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions, View } from "react-native";
 import { Layout, Text, Icon, Button } from "@ui-kitten/components";
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back-outline" />;
 
 export default function HeaderComponent(props) {
+  let screenWidth = Dimensions.get("window").width;
+  let screenHeight = Dimensions.get("window").height;
   if (props.rank == 0) {
     return (
-      <Layout style={styles.layout} level="4">
+      <Layout style={styles.layout} level="1">
         <Button appearance="ghost" accessoryLeft={BackIcon} />
         <Text category="h4" style={styles.textContent}>
           Football Player
@@ -17,7 +19,7 @@ export default function HeaderComponent(props) {
     );
   } else if (props.rank == 1) {
     return (
-      <Layout style={styles.layout} level="4">
+      <Layout style={styles.layout} level="1">
         <Button appearance="ghost" accessoryLeft={BackIcon} />
         <Text category="h4" style={styles.textContent}>
           Football Player
@@ -27,7 +29,7 @@ export default function HeaderComponent(props) {
     );
   }
   return (
-    <Layout style={styles.layout} level="4">
+    <Layout style={styles.layout} level="1">
       <Button appearance="ghost" accessoryLeft={BackIcon} />
       <Text category="h4" style={styles.textContent}>
         Football Player
@@ -74,5 +76,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
+    paddingTop: 40,
   },
 });
