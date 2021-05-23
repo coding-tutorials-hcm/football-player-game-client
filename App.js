@@ -6,6 +6,9 @@ import React, { useEffect, useState } from "react";
 
 import Main from "./screens/MainScreen";
 
+import { Provider } from "react-redux";
+import { ConfigureStore } from "./redux/ConfigureStore";
+
 import * as firebase from "firebase";
 import { firebaseConfig } from "./config";
 
@@ -14,6 +17,8 @@ if (!firebase.default.apps.length) {
 } else {
   firebase.default.app();
 }
+
+const store = ConfigureStore();
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -28,7 +33,9 @@ export default function App() {
     <>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={eva.light}>
-        <Main />
+        <Provider store={store}>
+          <Main />
+        </Provider>
       </ApplicationProvider>
     </>
   );

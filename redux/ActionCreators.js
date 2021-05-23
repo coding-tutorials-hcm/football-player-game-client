@@ -1,5 +1,6 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
+import axios from "axios";
 
 // questions
 export const fetchQuestions = () => (dispatch) => {
@@ -47,4 +48,30 @@ const usersFailed = (errmess) => ({
 const addUsers = (users) => ({
   type: ActionTypes.ADD_USERS,
   payload: users,
+});
+
+// test
+export const fetchTest = (rank) => (dispatch) => {
+  dispatch(testLoading());
+  return axios
+    .post(baseUrl + `questions/test-exam?rank=${rank}&count=10`)
+    .then((response) => {
+      if (!response.ok)
+        throw Error("Error " + response.status + ": " + response.statusText);
+      else return response.json();
+    })
+    .then((test) => dispatch(addTest(test)))
+    .catch((error) => dispatch(testFailed(error.message)));
+};
+
+const testLoading = () => ({
+  type: ActionTypes.TEST_LOADING,
+});
+const testFailed = (errmess) => ({
+  type: ActionTypes.TEST_FAILED,
+  payload: errmess,
+});
+const addTest = (test) => ({
+  type: ActionTypes.ADD_TEST,
+  payload: test,
 });

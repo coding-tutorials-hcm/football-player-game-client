@@ -9,7 +9,14 @@ import {
   Card,
 } from "@ui-kitten/components";
 
-export default function Quiz() {
+import { fetchTest } from "../redux/ActionCreators";
+import { connect } from "react-redux";
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchTest: (rank) => dispatch(fetchTest(rank)),
+});
+
+function Quiz(props) {
   return (
     <Layout style={styles.container}>
       <Layout style={styles.layout} level="4">
@@ -23,7 +30,13 @@ export default function Quiz() {
           <Text category="h5" style={styles.title}>
             EASY
           </Text>
-          <Card style={(styles.card, styles.cardEasy)}>
+          <Card
+            style={(styles.card, styles.cardEasy)}
+            onPress={() => {
+              props.fetchTest(0);
+              return props.navigation.navigate("QuizContainer");
+            }}
+          >
             <View style={styles.cardView}>
               <Text style={styles.textEasy}>Easy</Text>
               <Text style={styles.textContent} category="h5">
@@ -31,17 +44,19 @@ export default function Quiz() {
               </Text>
               <Text style={styles.textQuiz}>10 quiz</Text>
             </View>
-            {/* <Image
-              style={styles.image}
-              source={require("../assets/images/easy.png")}
-            /> */}
           </Card>
         </View>
         <View style={styles.item}>
           <Text category="h5" style={styles.title}>
             NORMAL
           </Text>
-          <Card style={(styles.card, styles.cardNormal)}>
+          <Card
+            style={(styles.card, styles.cardNormal)}
+            onPress={() => {
+              props.fetchTest(1);
+              return props.navigation.navigate("QuizContainer");
+            }}
+          >
             <View style={styles.cardView}>
               <Text style={styles.textNormal}>Normal</Text>
               <Text style={styles.textContent} category="h5">
@@ -49,17 +64,19 @@ export default function Quiz() {
               </Text>
               <Text style={styles.textQuiz}>10 quiz</Text>
             </View>
-            {/* <Image
-              style={styles.image}
-              source={require("../assets/images/normal.png")}
-            /> */}
           </Card>
         </View>
         <View style={styles.item}>
           <Text category="h5" style={styles.title}>
             HARD
           </Text>
-          <Card style={(styles.card, styles.cardHard)}>
+          <Card
+            style={(styles.card, styles.cardHard)}
+            onPress={() => {
+              props.fetchTest(2);
+              return props.navigation.navigate("QuizContainer");
+            }}
+          >
             <View style={styles.cardView}>
               <Text style={styles.textHard}>Hard</Text>
               <Text style={styles.textContent} category="h5">
@@ -67,10 +84,6 @@ export default function Quiz() {
               </Text>
               <Text style={styles.textQuiz}>10 quiz</Text>
             </View>
-            {/* <Image
-              style={styles.image}
-              source={require("../assets/images/hard.png")}
-            /> */}
           </Card>
         </View>
       </Layout>
@@ -156,3 +169,5 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
+
+export default connect(null, mapDispatchToProps)(Quiz);
