@@ -10,7 +10,11 @@ export default function HeaderComponent(props) {
   if (props.rank == 0) {
     return (
       <Layout style={styles.layout} level="1">
-        <Button appearance="ghost" accessoryLeft={BackIcon} />
+        <Button
+          appearance="ghost"
+          accessoryLeft={BackIcon}
+          onPress={props.navigation.goBack}
+        />
         <Text category="h4" style={styles.textContent}>
           Football Player
         </Text>
@@ -20,7 +24,11 @@ export default function HeaderComponent(props) {
   } else if (props.rank == 1) {
     return (
       <Layout style={styles.layout} level="1">
-        <Button appearance="ghost" accessoryLeft={BackIcon} />
+        <Button
+          appearance="ghost"
+          accessoryLeft={BackIcon}
+          onPress={props.navigation.goBack}
+        />
         <Text category="h4" style={styles.textContent}>
           Football Player
         </Text>
@@ -30,7 +38,11 @@ export default function HeaderComponent(props) {
   }
   return (
     <Layout style={styles.layout} level="1">
-      <Button appearance="ghost" accessoryLeft={BackIcon} />
+      <Button
+        appearance="ghost"
+        accessoryLeft={BackIcon}
+        onPress={props.navigation.goBack}
+      />
       <Text category="h4" style={styles.textContent}>
         Football Player
       </Text>

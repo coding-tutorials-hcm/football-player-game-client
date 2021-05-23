@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import InputComponent from "./InputComponent";
 
 import HeaderComponent from "./HeaderComponent";
-import { Layout, Spinner } from "@ui-kitten/components";
+import { Button, Layout, Spinner } from "@ui-kitten/components";
 
 const mapStateToProps = (state) => {
   return {
@@ -16,10 +16,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-function QuizContainer(props) {
-  let screenWidth = Dimensions.get("window").width;
-  let screenHeight = Dimensions.get("window").height;
+let screenWidth = Dimensions.get("window").width;
+let screenHeight = Dimensions.get("window").height;
 
+function QuizContainer(props) {
   const [test, setTest] = useState({});
   const [offsetX, setOffsetX] = useState();
 
@@ -33,7 +33,7 @@ function QuizContainer(props) {
     return (
       <Layout style={styles.container}>
         <Layout style={styles.layout}>
-          <HeaderComponent rank={test.rank} />
+          <HeaderComponent rank={test.rank} navigation={props.navigation} />
           <ScrollView
             horizontal={true}
             pagingEnabled={true}
@@ -73,6 +73,16 @@ function QuizContainer(props) {
               );
             })}
           </ScrollView>
+          <Layout
+            level="4"
+            style={{
+              width: screenWidth,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Button style={styles.next}>Next</Button>
+          </Layout>
         </Layout>
       </Layout>
     );
@@ -95,6 +105,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  next: {
+    marginBottom: 30,
+    width: screenWidth - 40,
   },
 });
 

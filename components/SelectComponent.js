@@ -57,7 +57,6 @@ export default function SelectComponent(props) {
             </Text>
           </Radio>
         </RadioGroup>
-        <Button style={styles.next}>Next</Button>
       </Layout>
     </Layout>
   );
