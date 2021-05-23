@@ -8,7 +8,6 @@ export default function InputComponent(props) {
   return (
     <Layout style={styles.container}>
       <Layout style={styles.layout} level="4">
-        <HeaderComponent rank={0} />
         <Card>
           <Image source={require("../assets/images/easy.png")} />
         </Card>
