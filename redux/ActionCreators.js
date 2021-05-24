@@ -73,3 +73,26 @@ const addTest = (test) => ({
   type: ActionTypes.ADD_TEST,
   payload: test,
 });
+
+// user
+export const createUser = (data) => (dispatch) => {
+  dispatch(userLoading());
+  return axios
+    .post(baseUrl + "users", data)
+    .then((response) => {
+      return response.data;
+    })
+    .then((msg) => dispatch(addUser(msg)))
+    .catch((error) => dispatch(userFailed(error.message)));
+};
+const userLoading = () => ({
+  type: ActionTypes.USER_LOADING,
+});
+const userFailed = (errmess) => ({
+  type: ActionTypes.USER_FAILED,
+  payload: errmess,
+});
+const addUser = (user) => ({
+  type: ActionTypes.ADD_USERS,
+  payload: user,
+});

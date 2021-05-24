@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 import SelectComponent from "../components/SelectComponent";
 
 import { connect } from "react-redux";
@@ -21,7 +21,10 @@ let screenHeight = Dimensions.get("window").height;
 
 function QuizContainer(props) {
   const [test, setTest] = useState({});
-  const [offsetX, setOffsetX] = useState();
+  const [offsetX, setOffsetX] = useState(0);
+  const [scroll, setScroll] = useState(null);
+  const [buttonFlag, setButtonFlag] = useState(false);
+  const [timeStart, setTimeStart] = useState(Date.now());
 
   useEffect(() => {
     if (props.test.test.data) {
@@ -40,7 +43,13 @@ function QuizContainer(props) {
             showsHorizontalScrollIndicator={false}
             onScroll={(event) => {
               setOffsetX(event.nativeEvent.contentOffset.x);
+              setButtonFlag(
+                event.nativeEvent.contentSize.width - 2 * screenWidth < offsetX
+                  ? true
+                  : false
+              );
             }}
+            ref={(node) => setScroll(node)}
           >
             {test.questions.map((prop, key) => {
               if (prop.type == 0) {
@@ -81,7 +90,17 @@ function QuizContainer(props) {
               alignItems: "center",
             }}
           >
-            <Button style={styles.next}>Next</Button>
+            <Button
+              style={styles.next}
+              onPress={() => {
+                if (buttonFlag) {
+                  alert("OK");
+                }
+                scroll.scrollTo({ x: offsetX + screenWidth });
+              }}
+            >
+              {buttonFlag ? "Finish" : "Next"}
+            </Button>
           </Layout>
         </Layout>
       </Layout>
