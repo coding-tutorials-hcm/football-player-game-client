@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
-import {
-  Layout,
-  Text,
-  ViewPager,
-  Avatar,
-  Divider,
-  Card,
-} from "@ui-kitten/components";
+import { Layout, Text, Avatar, Card, Icon } from "@ui-kitten/components";
 
 import { fetchTest } from "../redux/ActionCreators";
 import { connect } from "react-redux";
@@ -20,11 +13,15 @@ function Quiz(props) {
   return (
     <Layout style={styles.container}>
       <Layout style={styles.layout} level="4">
-        <View style={styles.header}>
-          <Text style={styles.title} category="h4">
-            UI Kitten
+        <View style={styles.nav}>
+          <Icon style={styles.icon} name="arrow-ios-back-outline" />
+          <Text style={styles.navTitle} category="h4">
+            Quiz
           </Text>
-          <Avatar size="giant" source={require("../assets/icon.png")} />
+          <Avatar
+            size="small"
+            source={require("../assets/images/avatar.jpg")}
+          />
         </View>
         <View style={styles.item}>
           <Text category="h5" style={styles.title}>
@@ -99,14 +96,8 @@ const styles = StyleSheet.create({
   },
   layout: {
     flex: 1,
-    padding: 20,
-  },
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    flexDirection: "row",
-    marginTop: 30,
-    marginBottom: 30,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   title: {
     textDecorationLine: "underline",
@@ -167,6 +158,20 @@ const styles = StyleSheet.create({
   textContent: {
     fontFamily: "poppins-bold",
     marginTop: 10,
+  },
+  nav: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 30,
+    paddingTop: 20,
+  },
+  navTitle: {
+    fontFamily: "poppins-bold",
+  },
+  icon: {
+    width: 25,
+    height: 25,
   },
 });
 

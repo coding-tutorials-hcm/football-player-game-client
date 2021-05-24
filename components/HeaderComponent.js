@@ -1,19 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Dimensions, View } from "react-native";
+import React from "react";
+import { StyleSheet, Alert } from "react-native";
 import { Layout, Text, Icon, Button } from "@ui-kitten/components";
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back-outline" />;
 
 export default function HeaderComponent(props) {
-  let screenWidth = Dimensions.get("window").width;
-  let screenHeight = Dimensions.get("window").height;
+  const alertHandler = () => {
+    Alert.alert(
+      "Are you sure",
+      "Do you want to cancel me ?",
+      [
+        {
+          text: "Yes",
+          onPress: props.navigation.goBack,
+        },
+        {
+          text: "No",
+          style: "cancel",
+        },
+      ],
+      { cancelable: true }
+    );
+  };
   if (props.rank == 0) {
     return (
       <Layout style={styles.layout} level="1">
         <Button
           appearance="ghost"
           accessoryLeft={BackIcon}
-          onPress={props.navigation.goBack}
+          onPress={alertHandler}
         />
         <Text category="h4" style={styles.textContent}>
           Football Player
@@ -27,7 +42,7 @@ export default function HeaderComponent(props) {
         <Button
           appearance="ghost"
           accessoryLeft={BackIcon}
-          onPress={props.navigation.goBack}
+          onPress={alertHandler}
         />
         <Text category="h4" style={styles.textContent}>
           Football Player
@@ -41,7 +56,7 @@ export default function HeaderComponent(props) {
       <Button
         appearance="ghost"
         accessoryLeft={BackIcon}
-        onPress={props.navigation.goBack}
+        onPress={alertHandler}
       />
       <Text category="h4" style={styles.textContent}>
         Football Player

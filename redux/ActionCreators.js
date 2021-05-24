@@ -85,6 +85,29 @@ export const createUser = (data) => (dispatch) => {
     .then((msg) => dispatch(addUser(msg)))
     .catch((error) => dispatch(userFailed(error.message)));
 };
+
+export const updateUser = (id, data) => (dispatch) => {
+  dispatch(userLoading());
+  return axios
+    .patch(baseUrl + "users/" + id, data)
+    .then((response) => {
+      return response.data;
+    })
+    .then((msg) => dispatch(addUser(msg)))
+    .catch((error) => dispatch(userFailed(error.message)));
+};
+
+export const fetchUser = (id) => (dispatch) => {
+  dispatch(userLoading());
+  return axios
+    .get(baseUrl + "users/" + id)
+    .then((response) => {
+      return response.data;
+    })
+    .then((msg) => dispatch(addUser(msg)))
+    .catch((error) => dispatch(userFailed(error.message)));
+};
+
 const userLoading = () => ({
   type: ActionTypes.USER_LOADING,
 });

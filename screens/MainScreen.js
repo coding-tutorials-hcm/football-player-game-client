@@ -19,9 +19,10 @@ import { useFonts } from "expo-font";
 import Rank from "./RankScreen";
 import History from "./HistoryScreen";
 
-import { baseUrl } from "../shared/baseUrl";
 import { fetchQuestions, fetchUsers } from "../redux/ActionCreators";
 import { connect } from "react-redux";
+import QuizHistory from "./QuizHistoryScreen";
+import QuizHistoryContainer from "../components/QuizHistoryContainer";
 
 const mapDispatchToProps = (dispatch) => ({
   fetchQuestions: () => dispatch(fetchQuestions()),
@@ -51,6 +52,25 @@ function QuizNavigatorScreen() {
     >
       <QuizNavigator.Screen component={Quiz} name="Quiz" />
       <QuizNavigator.Screen component={QuizContainer} name="QuizContainer" />
+    </QuizNavigator.Navigator>
+  );
+}
+
+const QuizHistoryNavigator = createStackNavigator();
+
+function QuizHistoryNavigatorScreen() {
+  return (
+    <QuizNavigator.Navigator
+      initialRouteName="QuizHistory"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <QuizNavigator.Screen component={QuizHistory} name="QuizHistory" />
+      <QuizNavigator.Screen
+        component={QuizHistoryContainer}
+        name="QuizHistoryContainer"
+      />
     </QuizNavigator.Navigator>
   );
 }

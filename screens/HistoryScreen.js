@@ -1,71 +1,67 @@
 import React from "react";
-import {View,StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import SelectComponent from "../components/SelectComponent";
-import {
-  Layout,
-  Text,
-  Avatar, 
-  Icon, 
-  Card
-} from '@ui-kitten/components';
+import { Layout, Text, Avatar, Icon, Card } from "@ui-kitten/components";
 export default function History() {
   return (
     <Layout style={styles.container}>
-        <View style={styles.nav} >
-        <Icon style={styles.icon} name='arrow-ios-back-outline'/>
-          <Text style={styles.navTitle}>History</Text>
-          <Avatar size='small' source={require('../assets/images/avatar.jpg')}/>
+      <View style={styles.nav}>
+        <Icon style={styles.icon} name="arrow-ios-back-outline" />
+        <Text style={styles.navTitle} category="h4">
+          History
+        </Text>
+        <Avatar size="small" source={require("../assets/images/avatar.jpg")} />
+      </View>
+      <Layout style={styles.listQuiz}>
+        <Text style={styles.date}>-Tuesday, 4 May 2021-</Text>
+        <View style={styles.item}>
+          <Card style={(styles.card, styles.cardEasy)}>
+            <View style={styles.cardView}>
+              <Text style={styles.textEasy}>Easy</Text>
+              <Text style={styles.textContent} category="h6">
+                Football Player
+              </Text>
+              <Text style={styles.textQuiz}>10 quiz</Text>
+            </View>
+          </Card>
         </View>
-        <Layout style={styles.listQuiz}>
-          <Text style={styles.date}>-Tuesday, 4 May 2021-</Text>
-          <View style={styles.item}>
-              <Card style={(styles.card, styles.cardEasy)}>
-                <View style={styles.cardView}>
-                  <Text style={styles.textEasy}>Easy</Text>
-                  <Text style={styles.textContent} category="h6">
-                    Football Player
-                  </Text>
-                  <Text style={styles.textQuiz}>10 quiz</Text>
-                </View>
-              </Card>
+        <View style={styles.item}>
+          <Card style={(styles.card, styles.cardHard)}>
+            <View style={styles.cardView}>
+              <Text style={styles.textHard}>Hard</Text>
+              <Text style={styles.textContent} category="h6">
+                Football Player
+              </Text>
+              <Text style={styles.textQuiz}>10 quiz</Text>
             </View>
-            <View style={styles.item}>
-              <Card style={(styles.card, styles.cardHard)}>
-                <View style={styles.cardView}>
-                  <Text style={styles.textHard}>Hard</Text>
-                  <Text style={styles.textContent} category="h6">
-                    Football Player
-                  </Text>
-                  <Text style={styles.textQuiz}>10 quiz</Text>
-                </View>
-              </Card>
+          </Card>
+        </View>
+      </Layout>
+      <Layout style={styles.listQuiz}>
+        <Text style={styles.date}>-Tuesday, 3 May 2021-</Text>
+        <View style={styles.item}>
+          <Card style={(styles.card, styles.cardNormal)}>
+            <View style={styles.cardView}>
+              <Text style={styles.textNormal}>Normal</Text>
+              <Text style={styles.textContent} category="h6">
+                Football Player
+              </Text>
+              <Text style={styles.textQuiz}>10 quiz</Text>
             </View>
-        </Layout>
-        <Layout style={styles.listQuiz}>
-          <Text style={styles.date}>-Tuesday, 3 May 2021-</Text>
-            <View style={styles.item}>
-              <Card style={(styles.card, styles.cardNormal)}>
-                <View style={styles.cardView}>
-                  <Text style={styles.textNormal}>Normal</Text>
-                  <Text style={styles.textContent} category="h6">
-                    Football Player
-                  </Text>
-                  <Text style={styles.textQuiz}>10 quiz</Text>
-                </View>
-              </Card>
+          </Card>
+        </View>
+        <View style={styles.item}>
+          <Card style={(styles.card, styles.cardHard)}>
+            <View style={styles.cardView}>
+              <Text style={styles.textHard}>Hard</Text>
+              <Text style={styles.textContent} category="h6">
+                Football Player
+              </Text>
+              <Text style={styles.textQuiz}>10 quiz</Text>
             </View>
-            <View style={styles.item}>
-              <Card style={(styles.card, styles.cardHard)}>
-                <View style={styles.cardView}>
-                  <Text style={styles.textHard}>Hard</Text>
-                  <Text style={styles.textContent} category="h6">
-                    Football Player
-                  </Text>
-                  <Text style={styles.textQuiz}>10 quiz</Text>
-                </View>
-              </Card>
-            </View>
-        </Layout>
+          </Card>
+        </View>
+      </Layout>
     </Layout>
   );
 }
@@ -77,31 +73,29 @@ const styles = StyleSheet.create({
     fontFamily: "poppins-extralight",
     backgroundColor: "#F3F5F9",
   },
-  nav:{
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+  nav: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     padding: 20,
-    marginTop: 30
+    marginTop: 30,
   },
-  navTitle:{
-    fontSize:22,
-    fontWeight: 'bold'
+  navTitle: {
+    fontFamily: "poppins-bold",
   },
   icon: {
     width: 25,
     height: 25,
   },
-  listQuiz:{
+  listQuiz: {
     paddingLeft: 20,
     paddingRight: 20,
-    paddingTop:15,
+    paddingTop: 15,
     backgroundColor: "#F3F5F9",
   },
   card: {
     display: "flex",
     flexDirection: "row",
-    
   },
   item: {
     marginTop: 10,
@@ -153,5 +147,4 @@ const styles = StyleSheet.create({
     fontFamily: "poppins-bold",
     marginTop: 10,
   },
-
 });
