@@ -22,7 +22,7 @@ export default function Login() {
 
   return (
     <Layout style={styles.container} level="4">
-      <ScrollView  contentContainerStyle={styles.scrollView}>
+      <ScrollView  contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={false}>
       <View style={styles.layout} >
         <Image style={styles.bgImg}  source={require("../assets/images/logo.png")} />
       </View>

@@ -1,10 +1,11 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import SelectComponent from "../components/SelectComponent";
 import { Layout, Text, Avatar, Icon, Card } from "@ui-kitten/components";
 export default function History() {
   return (
     <Layout style={styles.container}>
+      <ScrollView>
       <View style={styles.nav}>
         <Icon style={styles.icon} name="arrow-ios-back-outline" />
         <Text style={styles.navTitle} category="h4">
@@ -62,6 +63,7 @@ export default function History() {
           </Card>
         </View>
       </Layout>
+      </ScrollView>
     </Layout>
   );
 }
