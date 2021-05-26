@@ -1,5 +1,5 @@
 import React from "react";
-import {View,StyleSheet } from "react-native";
+import {View,StyleSheet} from "react-native";
 
 import {
   Layout,
@@ -15,7 +15,7 @@ export default function Home() {
           <Text style={styles.text} status='basic'>Hi, My Friends</Text>
           <Text style={styles.title} status='basic'>What do you want to learn today?</Text>
         </View>
-        <Layout style={styles.main}>
+        <View style={styles.main}>
           <Text style={styles.quizTitle} status='basic'>Choose your quiz</Text>
           <View style={styles.item}>
             <Card style={(styles.card, styles.cardEasy)}>
@@ -50,7 +50,7 @@ export default function Home() {
               </View>
             </Card>
           </View>
-        </Layout>
+        </View>
     </Layout>
   );
 }
@@ -82,7 +82,6 @@ const styles = StyleSheet.create({
   },
   main:{
     backgroundColor: "#ffffff",
-    // marginTop: 5,
     borderTopLeftRadius: 35,
     borderTopRightRadius: 35,
     flex: 1,
@@ -147,5 +146,9 @@ const styles = StyleSheet.create({
   textContent: {
     fontFamily: "poppins-bold",
     marginTop: 10,
+  },
+  imgEasy:{
+    width: 50,
+    height: 50,
   },
 });

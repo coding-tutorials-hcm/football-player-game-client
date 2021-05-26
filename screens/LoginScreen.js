@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, SafeAreaView, StyleSheet, View } from "react-native";
+import { Image, SafeAreaView, StyleSheet, View, TextInput,ScrollView } from "react-native";
 import { Layout, Text, Button, Icon } from "@ui-kitten/components";
 
 import * as firebase from "firebase";
@@ -18,45 +18,53 @@ export default function Login() {
 
   useEffect(() => {});
 
+  const [text, onChangeText] = React.useState(null);
+
   return (
     <Layout style={styles.container} level="4">
-      <Layout style={styles.layout} level="4">
-        <Image source={require("../assets/images/logo.png")} />
-      </Layout>
+      <ScrollView  contentContainerStyle={styles.scrollView}>
+      <View style={styles.layout} >
+        <Image style={styles.bgImg}  source={require("../assets/images/logo.png")} />
+      </View>
       <View style={styles.paddingText}>
-        <Text category="h4" style={styles.textGray}>
+        <Text category="h5" style={styles.textGray}>
           You can learn everything{" "}
         </Text>
-        <Text style={styles.textGray} category="h4">
-          <Text category="h4" style={styles.textBlack}>
+        <Text style={styles.textGray} category="h5">
+          <Text category="h5" style={styles.textBlack}>
             fast
           </Text>{" "}
           and{" "}
-          <Text category="h4" style={styles.textBlack}>
+          <Text category="h5" style={styles.textBlack}>
             easily
           </Text>{" "}
           with{" "}
         </Text>
-        <Text category="h4" style={styles.textBlue}>
+        <Text category="h5" style={styles.textBlue}>
           F-Quiz
         </Text>
       </View>
-      <Button
-        style={styles.button}
-        status="control"
-        accessoryLeft={GoogleIcon}
-        onPress={() => login()}
-      >
-        Login with Google
-      </Button>
-      <Button
-        style={styles.button}
-        status="control"
-        accessoryLeft={FacebookIcon}
-        onPress={() => login()}
-      >
-        Login with Facebook
-      </Button>
+      
+        <SafeAreaView>
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            secureTextEntry={true}
+          />
+        </SafeAreaView>
+
+          <Button
+          style={styles.button}
+          status='info'
+          >
+          Login
+        </Button>
+      </ScrollView>
     </Layout>
   );
 }
@@ -68,9 +76,15 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   layout: {
-    flex: 1,
+    marginTop:50,
     justifyContent: "center",
     alignItems: "center",
+    
+  },
+  bgImg:{
+    width: 300,
+    height: 310
+
   },
   textGray: {
     color: "#455264",
@@ -84,13 +98,25 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   paddingText: {
-    paddingLeft: 30,
-    paddingRight: 30,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    marginTop:10
   },
   button: {
     marginTop: 10,
+    backgroundColor: "#3988E8",
+    color: '#ffffff',
+    borderColor:"#3988E8",
+  },
+  input: {
+    height: 45,
+    marginTop: 15,
+    borderRadius: 5,
+    backgroundColor: '#ffffff',
+    paddingLeft:5
+  },
+  scrollView: {
+    marginHorizontal: 20,
   },
 });
