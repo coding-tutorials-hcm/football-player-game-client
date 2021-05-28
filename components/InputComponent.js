@@ -8,7 +8,7 @@ let screenWidth = Dimensions.get("window").width;
 let screenHeight = Dimensions.get("window").height;
 
 export default function InputComponent(props) {
-  const [value, setValue] = useState("");
+  const [answer, setAnswer] = useState("");
   return (
     <Layout style={styles.container}>
       <Layout style={styles.layout} level="4">
@@ -26,8 +26,11 @@ export default function InputComponent(props) {
         </Text>
         <Input
           placeholder="Place your Text"
-          value={value}
-          onChangeText={(nextValue) => setValue(nextValue)}
+          value={answer}
+          onChangeText={(nextValue) => {
+            setAnswer(nextValue);
+            props.callback({ answer: nextValue, index: props.keyIndex });
+          }}
           style={styles.input}
         />
       </Layout>
@@ -57,6 +60,7 @@ const styles = StyleSheet.create({
   },
   input: {
     marginTop: 30,
+    marginBottom: 100,
   },
   next: {
     marginTop: 30,

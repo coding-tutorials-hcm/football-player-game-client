@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:791360157679:android:068115c55202664506a81a",
+        "mobilesdk_app_id": "1:791360157679:android:08405031a21b3c8906a81a",
         "android_client_info": {
-          "package_name": "android.package"
+          "package_name": "example.expo.googlesignin"
         }
       },
       "oauth_client": [
@@ -31,11 +31,10 @@
               "client_type": 3
             },
             {
-              "client_id": "791360157679-t8uk5dr22g1peisnu60se21ojftdetee.apps.googleusercontent.com",
+              "client_id": "791360157679-0k7jf43oaq8pt4rc947i9r3pegm0nv7p.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": ".ios",
-                "app_store_id": "123456789"
+                "bundle_id": "org.reactjs.native.example.footballPlayerGame"
               }
             }
           ]

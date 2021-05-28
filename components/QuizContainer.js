@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
+import {
+  Dimensions,
+  ScrollView,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import SelectComponent from "../components/SelectComponent";
 
 import { connect } from "react-redux";
@@ -7,19 +13,42 @@ import { updateUser, fetchUser } from "../redux/ActionCreators";
 
 import InputComponent from "./InputComponent";
 import HeaderComponent from "./HeaderComponent";
-import { Button, Layout, Spinner } from "@ui-kitten/components";
+import { Button, Layout, Spinner, Icon } from "@ui-kitten/components";
+// import Sound from "react-native-sound";
+import { Audio } from "expo-av";
 
 const mapStateToProps = (state) => {
   return {
     questions: state.questions,
     test: state.test,
+    user: state.user,
     users: state.users,
   };
 };
 
+const compare = (array, value) => {
+  const temp = [...array];
+
+  temp[value.index] = value.answer;
+
+  return temp;
+};
+
+const checkPoint = (test, answers) => {
+  let point = 0;
+  for (const [index, answer] of answers.entries()) {
+    if (test[index]) {
+      if (test[index].answer.Answer[answer].correct) {
+        point += 10;
+      }
+    }
+  }
+  return point;
+};
+
 const mapDispatchToProps = (dispatch) => ({
-  fetchUser: (id) => dispatch(fetchQuestions(id)),
-  updateUser: (id, data) => dispatch(fetchUsers(id, data)),
+  fetchUser: (id) => dispatch(fetchUser(id)),
+  updateUser: (id, data) => dispatch(updateUser(id, data)),
 });
 
 let screenWidth = Dimensions.get("window").width;
@@ -31,23 +60,71 @@ function QuizContainer(props) {
   const [scroll, setScroll] = useState(null);
   const [buttonFlag, setButtonFlag] = useState(false);
   const [timeStart, setTimeStart] = useState(Date.now());
+  const [timeEnd, setTimeEnd] = useState(0);
+
+  const [user, setUser] = useState({});
+  const [answers, setAnswers] = useState([]);
+
+  let [sound, setSound] = useState();
+
+  async function playSound() {
+    const { sound } = await Audio.Sound.createAsync(
+      require("../assets/sounds/sound.mp3")
+    );
+    setSound(sound);
+    await sound.playAsync();
+  }
+
+  async function pauseSound() {
+    if (sound) {
+      await sound.pauseAsync();
+      setSound(null);
+    }
+  }
 
   useEffect(() => {
     if (props.test.test.data) {
       setTest(props.test.test.data);
     }
+
+    if (props.user.user.data) {
+      setUser(props.user.user.data);
+    }
   });
+
+  const callback = (answer) => {
+    setAnswers(compare(answers, answer));
+  };
+
+  const submitTest = (user) => {
+    if (answers.length == 10) {
+      if (user.testExamHistory) {
+        user.testExamHistory.push({
+          timeStart: timeStart,
+          timeEnd: timeEnd,
+          answers: answers,
+          testExam: test,
+          point: checkPoint(test, answers),
+        });
+
+        props.updateUser(user._id, user);
+        pauseSound();
+        props.navigation.navigate("Finish");
+      }
+    }
+  };
 
   if (test.questions) {
     return (
       <Layout style={styles.container}>
-        <Layout style={styles.layout}>
+        <Layout style={styles.layout} level="4">
           <HeaderComponent rank={test.rank} navigation={props.navigation} />
           <ScrollView>
             <ScrollView
               horizontal={true}
               pagingEnabled={true}
               showsHorizontalScrollIndicator={false}
+              scrollEnabled={false}
               onScroll={(event) => {
                 setOffsetX(event.nativeEvent.contentOffset.x);
                 setButtonFlag(
@@ -70,7 +147,12 @@ function QuizContainer(props) {
                         alignItems: "flex-start",
                       }}
                     >
-                      <SelectComponent data={prop} offset={offsetX} />
+                      <SelectComponent
+                        data={prop}
+                        offset={offsetX}
+                        callback={callback}
+                        keyIndex={key}
+                      />
                     </View>
                   );
                 }
@@ -83,7 +165,12 @@ function QuizContainer(props) {
                       alignItems: "flex-start",
                     }}
                   >
-                    <InputComponent data={prop} offset={offsetX} />
+                    <InputComponent
+                      data={prop}
+                      offset={offsetX}
+                      callback={callback}
+                      keyIndex={key}
+                    />
                   </View>
                 );
               })}
@@ -100,13 +187,28 @@ function QuizContainer(props) {
                 style={styles.next}
                 onPress={() => {
                   if (buttonFlag) {
-                    alert("OK");
+                    setTimeEnd(Date.now());
+                    pauseSound();
+                    submitTest(user);
+                  }
+
+                  if (!sound) {
+                    playSound();
                   }
                   scroll.scrollTo({ x: offsetX + screenWidth });
                 }}
               >
                 {buttonFlag ? "Finish" : "Next"}
               </Button>
+              {sound ? (
+                <TouchableOpacity onPress={() => pauseSound()}>
+                  <Icon name="volume-up-outline" style={styles.icon} />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity onPress={() => playSound()}>
+                  <Icon name="volume-mute-outline" style={styles.icon} />
+                </TouchableOpacity>
+              )}
             </Layout>
           </ScrollView>
         </Layout>
@@ -123,6 +225,11 @@ function QuizContainer(props) {
 }
 
 const styles = StyleSheet.create({
+  icon: {
+    marginTop: 10,
+    width: 30,
+    height: 30,
+  },
   container: {
     flex: 1,
     flexDirection: "column",

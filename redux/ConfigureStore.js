@@ -5,10 +5,11 @@ import logger from "redux-logger";
 import { users } from "./users";
 import { questions } from "./questions";
 import { test } from "./test";
+import { user } from "./user";
 
 export const ConfigureStore = () => {
   const store = createStore(
-    combineReducers({ users, questions, test }),
+    combineReducers({ user, users, questions, test }),
     applyMiddleware(thunk, logger)
   );
   return store;

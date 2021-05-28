@@ -1,1 +1,1 @@
-export const baseUrl = "https://infinite-mesa-24895.herokuapp.com/";
+export const baseUrl = "https://football-player-game-server.herokuapp.com/";

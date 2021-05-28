@@ -1,8 +1,10 @@
 import React from "react";
-import { StyleSheet, Alert } from "react-native";
+import { StyleSheet, Alert, Dimensions } from "react-native";
 import { Layout, Text, Icon, Button } from "@ui-kitten/components";
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back-outline" />;
+
+let screenWidth = Dimensions.get("window").width;
 
 export default function HeaderComponent(props) {
   const alertHandler = () => {
@@ -104,5 +106,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     paddingTop: 40,
+    width: screenWidth,
   },
 });

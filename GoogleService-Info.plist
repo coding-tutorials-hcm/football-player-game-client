@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>791360157679-uupo37unef2fm24e96421c67f81mm99f.apps.googleusercontent.com</string>
+	<string>791360157679-7epca1kl5406ma79dn8dbbiqcqnnumc3.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.791360157679-uupo37unef2fm24e96421c67f81mm99f</string>
+	<string>com.googleusercontent.apps.791360157679-7epca1kl5406ma79dn8dbbiqcqnnumc3</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>791360157679-s7g6i89ooelhdsbpiau60qbp2gl0bgb6.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyC01j6_V3o7YjZhbb5F6NDCiaQX0gaazEA</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>ios.bundleIdentifier</string>
+	<string>example.expo.googlesignin</string>
 	<key>PROJECT_ID</key>
 	<string>football-player-game-880d7</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:791360157679:ios:8c12f1768487b4ff06a81a</string>
+	<string>1:791360157679:ios:456082dce97b222206a81a</string>
 </dict>
 </plist>

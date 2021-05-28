@@ -75,36 +75,44 @@ const addTest = (test) => ({
 });
 
 // user
+export const login = (data) => {
+  return axios
+    .post(baseUrl + "users/login", data)
+    .then((data) => data.data)
+    .catch((err) => null);
+};
+
 export const createUser = (data) => (dispatch) => {
   dispatch(userLoading());
   return axios
     .post(baseUrl + "users", data)
-    .then((response) => {
-      return response.data;
-    })
-    .then((msg) => dispatch(addUser(msg)))
+    .then((response) => response.data)
     .catch((error) => dispatch(userFailed(error.message)));
 };
 
 export const updateUser = (id, data) => (dispatch) => {
-  dispatch(userLoading());
+  alert(id);
   return axios
-    .patch(baseUrl + "users/" + id, data)
+    .patch(baseUrl + `users`, data)
     .then((response) => {
       return response.data;
     })
-    .then((msg) => dispatch(addUser(msg)))
+    .then(() => {
+      fetchUser(id);
+      return dispatch(addTest([]));
+    })
     .catch((error) => dispatch(userFailed(error.message)));
 };
 
 export const fetchUser = (id) => (dispatch) => {
   dispatch(userLoading());
-  return axios
-    .get(baseUrl + "users/" + id)
+  return fetch(baseUrl + `users/${id}`)
     .then((response) => {
-      return response.data;
+      if (!response.ok)
+        throw Error("Error " + response.status + ": " + response.statusText);
+      else return response.json();
     })
-    .then((msg) => dispatch(addUser(msg)))
+    .then((res) => dispatch(addUser(res)))
     .catch((error) => dispatch(userFailed(error.message)));
 };
 
@@ -116,6 +124,6 @@ const userFailed = (errmess) => ({
   payload: errmess,
 });
 const addUser = (user) => ({
-  type: ActionTypes.ADD_USERS,
+  type: ActionTypes.ADD_USER,
   payload: user,
 });

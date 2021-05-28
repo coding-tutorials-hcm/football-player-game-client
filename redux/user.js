@@ -10,7 +10,7 @@ export const user = (
         ...state,
         isLoading: false,
         errMess: null,
-        users: action.payload,
+        user: action.payload,
       };
     case ActionTypes.USER_LOADING:
       return { ...state, isLoading: true, errMess: null, user: {} };

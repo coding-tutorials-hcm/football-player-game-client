@@ -1,74 +1,144 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import SelectComponent from "../components/SelectComponent";
-import { Layout, Text, Avatar, Icon, Card } from "@ui-kitten/components";
-export default function History() {
+import {
+  Layout,
+  Text,
+  Avatar,
+  Icon,
+  Card,
+  Spinner,
+} from "@ui-kitten/components";
+
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+function History(props) {
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    if (props.user.user.data) {
+      setUser(props.user.user.data);
+    }
+  });
+
+  if (user) {
+    return (
+      <Layout style={styles.container}>
+        <View style={styles.nav}>
+          <Icon style={styles.icon} name="arrow-ios-back-outline" />
+          <Text style={styles.navTitle} category="h4">
+            History
+          </Text>
+          <Avatar
+            size="small"
+            source={require("../assets/images/avatar.jpg")}
+          />
+        </View>
+        <Layout style={styles.listQuiz}>
+          <ScrollView
+            horizontal={false}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+          >
+            {user.testExamHistory.map((prop, key) => {
+              if (prop.testExam.rank == 0) {
+                return (
+                  <View key={key}>
+                    <Text style={styles.date}>
+                      -{new Date(prop.timeStart).toLocaleString()}-
+                    </Text>
+                    <View style={styles.item}>
+                      <Card style={(styles.card, styles.cardEasy)}>
+                        <View style={styles.cardView}>
+                          <Text style={styles.textEasy}>Easy</Text>
+                          <Text style={styles.textContent} category="h6">
+                            Football Player
+                          </Text>
+                          <Text style={styles.textQuiz}>
+                            {prop.testExam.count} quiz
+                          </Text>
+                        </View>
+                      </Card>
+                    </View>
+                  </View>
+                );
+              }
+
+              if (prop.testExam.rank == 2) {
+                return (
+                  <View key={key}>
+                    <Text style={styles.date}>
+                      -{new Date(prop.timeStart).toLocaleString()}-
+                    </Text>
+
+                    <View style={styles.item}>
+                      <Card style={(styles.card, styles.cardHard)}>
+                        <View style={styles.cardView}>
+                          <Text style={styles.textHard}>Hard</Text>
+                          <Text style={styles.textContent} category="h6">
+                            Football Player
+                          </Text>
+                          <Text style={styles.textQuiz}>
+                            {prop.testExam.count} quiz
+                          </Text>
+                        </View>
+                      </Card>
+                    </View>
+                  </View>
+                );
+              }
+
+              return (
+                <View key={key}>
+                  <Text style={styles.date}>
+                    -{new Date(prop.timeStart).toLocaleString()}-
+                  </Text>
+                  <View style={styles.item}>
+                    <Card style={(styles.card, styles.cardNormal)}>
+                      <View style={styles.cardView}>
+                        <Text style={styles.textNormal}>Normal</Text>
+                        <Text style={styles.textContent} category="h6">
+                          Football Player
+                        </Text>
+                        <Text style={styles.textQuiz}>
+                          {prop.testExam.count} quiz
+                        </Text>
+                      </View>
+                    </Card>
+                  </View>
+                </View>
+              );
+            })}
+          </ScrollView>
+        </Layout>
+      </Layout>
+    );
+  }
+
   return (
-    <Layout style={styles.container}>
-      <ScrollView>
-      <View style={styles.nav}>
-        <Icon style={styles.icon} name="arrow-ios-back-outline" />
-        <Text style={styles.navTitle} category="h4">
-          History
-        </Text>
-        <Avatar size="small" source={require("../assets/images/avatar.jpg")} />
-      </View>
-      <Layout style={styles.listQuiz}>
-        <Text style={styles.date}>-Tuesday, 4 May 2021-</Text>
-        <View style={styles.item}>
-          <Card style={(styles.card, styles.cardEasy)}>
-            <View style={styles.cardView}>
-              <Text style={styles.textEasy}>Easy</Text>
-              <Text style={styles.textContent} category="h6">
-                Football Player
-              </Text>
-              <Text style={styles.textQuiz}>10 quiz</Text>
-            </View>
-          </Card>
-        </View>
-        <View style={styles.item}>
-          <Card style={(styles.card, styles.cardHard)}>
-            <View style={styles.cardView}>
-              <Text style={styles.textHard}>Hard</Text>
-              <Text style={styles.textContent} category="h6">
-                Football Player
-              </Text>
-              <Text style={styles.textQuiz}>10 quiz</Text>
-            </View>
-          </Card>
-        </View>
+    <Layout style={styles.containerLoading} level="4">
+      <Layout style={styles.layoutLoading} level="4">
+        <Spinner />
       </Layout>
-      <Layout style={styles.listQuiz}>
-        <Text style={styles.date}>-Tuesday, 3 May 2021-</Text>
-        <View style={styles.item}>
-          <Card style={(styles.card, styles.cardNormal)}>
-            <View style={styles.cardView}>
-              <Text style={styles.textNormal}>Normal</Text>
-              <Text style={styles.textContent} category="h6">
-                Football Player
-              </Text>
-              <Text style={styles.textQuiz}>10 quiz</Text>
-            </View>
-          </Card>
-        </View>
-        <View style={styles.item}>
-          <Card style={(styles.card, styles.cardHard)}>
-            <View style={styles.cardView}>
-              <Text style={styles.textHard}>Hard</Text>
-              <Text style={styles.textContent} category="h6">
-                Football Player
-              </Text>
-              <Text style={styles.textQuiz}>10 quiz</Text>
-            </View>
-          </Card>
-        </View>
-      </Layout>
-      </ScrollView>
     </Layout>
   );
 }
 
 const styles = StyleSheet.create({
+  containerLoading: {
+    flex: 1,
+    flexDirection: "column",
+  },
+  layoutLoading: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   container: {
     flex: 1,
     flexDirection: "column",
@@ -149,4 +219,9 @@ const styles = StyleSheet.create({
     fontFamily: "poppins-bold",
     marginTop: 10,
   },
+  date: {
+    fontFamily: "poppins-bold",
+  },
 });
+
+export default connect(mapStateToProps)(History);

@@ -16,7 +16,8 @@ let screenWidth = Dimensions.get("window").width;
 let screenHeight = Dimensions.get("window").height;
 
 export default function SelectComponent(props) {
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
   return (
     <Layout style={styles.container}>
       <Layout style={styles.layout} level="4">
@@ -34,7 +35,10 @@ export default function SelectComponent(props) {
         </Text>
         <RadioGroup
           selectedIndex={selectedIndex}
-          onChange={(index) => setSelectedIndex(index)}
+          onChange={(index) => {
+            setSelectedIndex(index);
+            props.callback({ answer: index, index: props.keyIndex });
+          }}
         >
           <Radio style={styles.radio}>
             <Text style={styles.radioText}>

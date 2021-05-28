@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import {
   Layout,
@@ -10,48 +10,96 @@ import {
   ListItem,
 } from "@ui-kitten/components";
 
+import { connect } from "react-redux";
+import { ScrollView } from "react-native-gesture-handler";
+
+function compare(a, b) {
+  if (a.point < b.point) {
+    return -1;
+  }
+  if (a.point > b.point) {
+    return 1;
+  }
+  return 0;
+}
+
 const data = new Array(8).fill({
   name: "Bruce Welch",
   points: "9,905 points",
 });
-export default function Rank() {
-  const renderItemAccessory = (props) => <Button size="tiny">View</Button>;
 
-  const renderItemIcon = (props) => <Icon {...props} name="person" />;
+const mapStateToProps = (state) => {
+  return {
+    users: state.users,
+  };
+};
 
-  const renderItem = ({ item, index }) => (
-    <ListItem
-      title={`${item.name} ${index + 1}`}
-      description={`${item.points} ${index + 1}`}
-      accessoryLeft={renderItemIcon}
-      accessoryRight={renderItemAccessory}
-    />
-  );
+const renderItemAccessory = (props) => <Button size="tiny">View</Button>;
+const renderItemIcon = (props) => <Icon {...props} name="person" />;
+
+const renderItem = ({ item, index }) => (
+  <ListItem
+    style={styles.topOnePoint}
+    title={`${item.email}`}
+    description={`${item.point} point`}
+    accessoryLeft={renderItemIcon}
+    accessoryRight={renderItemAccessory}
+  />
+);
+
+function Rank(props) {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    setUsers(props.users.users.data.sort(compare));
+  });
+
+  if (users) {
+    return (
+      <Layout style={styles.container}>
+        <View style={styles.nav}>
+          <Icon style={styles.icon} name="arrow-ios-back-outline" />
+          <Text style={styles.navTitle} category="h4">
+            Ranking
+          </Text>
+          <Avatar
+            size="small"
+            source={require("../assets/images/avatar.jpg")}
+          />
+        </View>
+        <View style={styles.topOne}>
+          <Avatar
+            style={styles.mainAvt}
+            source={require("../assets/images/rank1.jpg")}
+          />
+          <Text style={styles.topOneName}>Hayden Bleasel</Text>
+          <Text style={styles.topOnePoint}>10,145 points</Text>
+        </View>
+        <Layout style={styles.listRank}>
+          <List data={users} renderItem={renderItem} />
+        </Layout>
+      </Layout>
+    );
+  }
 
   return (
-    <Layout style={styles.container}>
-      <View style={styles.nav}>
-        <Icon style={styles.icon} name="arrow-ios-back-outline" />
-        <Text style={styles.navTitle} category="h4">
-          Ranking
-        </Text>
-        <Avatar size="small" source={require("../assets/images/avatar.jpg")} />
-      </View>
-      <View style={styles.topOne}>
-        <Avatar
-          style={styles.mainAvt}
-          source={require("../assets/images/rank1.jpg")}
-        />
-        <Text style={styles.topOneName}>Hayden Bleasel</Text>
-        <Text style={styles.topOnePoint}>10,145 points</Text>
-      </View>
-      <Layout style={styles.listRank}>
-        <List data={data} renderItem={renderItem} />
+    <Layout style={styles.containerLoading} level="4">
+      <Layout style={styles.layoutLoading} level="4">
+        <Spinner />
       </Layout>
     </Layout>
   );
 }
 const styles = StyleSheet.create({
+  containerLoading: {
+    flex: 1,
+    flexDirection: "column",
+  },
+  layoutLoading: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   container: {
     flex: 1,
     flexDirection: "column",
@@ -94,3 +142,5 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
+
+export default connect(mapStateToProps)(Rank);

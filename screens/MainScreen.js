@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -7,6 +8,7 @@ import {
   BottomNavigationTab,
   Icon,
   Spinner,
+  Layout,
 } from "@ui-kitten/components";
 
 import Home from "./HomeScreen";
@@ -19,15 +21,21 @@ import { useFonts } from "expo-font";
 import Rank from "./RankScreen";
 import History from "./HistoryScreen";
 
-import { fetchQuestions, fetchUsers } from "../redux/ActionCreators";
+import { fetchQuestions, fetchUsers, fetchUser } from "../redux/ActionCreators";
 import { connect } from "react-redux";
-import QuizHistory from "./QuizHistoryScreen";
-import QuizHistoryContainer from "../components/QuizHistoryContainer";
+import Finish from "./FinishScreen";
 
 const mapDispatchToProps = (dispatch) => ({
   fetchQuestions: () => dispatch(fetchQuestions()),
   fetchUsers: () => dispatch(fetchUsers()),
+  fetchUser: () => dispatch(fetchUser()),
 });
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
 
 const PersonIcon = (props) => <Icon {...props} name="person-outline" />;
 
@@ -41,6 +49,7 @@ const ChartIcon = (props) => <Icon {...props} name="bar-chart-outline" />;
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
+//Quiz
 const QuizNavigator = createStackNavigator();
 function QuizNavigatorScreen() {
   return (
@@ -52,28 +61,58 @@ function QuizNavigatorScreen() {
     >
       <QuizNavigator.Screen component={Quiz} name="Quiz" />
       <QuizNavigator.Screen component={QuizContainer} name="QuizContainer" />
+      <HomeNavigator.Screen component={Finish} name="Finish" />
     </QuizNavigator.Navigator>
   );
 }
 
-const QuizHistoryNavigator = createStackNavigator();
-
-function QuizHistoryNavigatorScreen() {
+//Home
+const HomeNavigator = createStackNavigator();
+function HomeNavigatorScreen() {
   return (
-    <QuizNavigator.Navigator
-      initialRouteName="QuizHistory"
+    <HomeNavigator.Navigator
+      initialRouteName="Home"
       screenOptions={{
         headerShown: false,
       }}
     >
-      <QuizNavigator.Screen component={QuizHistory} name="QuizHistory" />
-      <QuizNavigator.Screen
-        component={QuizHistoryContainer}
-        name="QuizHistoryContainer"
-      />
-    </QuizNavigator.Navigator>
+      <HomeNavigator.Screen component={Home} name="Home" />
+      <HomeNavigator.Screen component={QuizContainer} name="QuizContainer" />
+      <HomeNavigator.Screen component={Finish} name="Finish" />
+    </HomeNavigator.Navigator>
   );
 }
+
+//Rank
+const RankNavigator = createStackNavigator();
+function RankNavigatorScreen() {
+  return (
+    <RankNavigator.Navigator
+      initialRouteName="Rank"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <RankNavigator.Screen component={Rank} name="Rank" />
+    </RankNavigator.Navigator>
+  );
+}
+
+//History
+const HistoryNavigator = createStackNavigator();
+function HistoryNavigatorScreen() {
+  return (
+    <HistoryNavigator.Navigator
+      initialRouteName="History"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <HistoryNavigator.Screen component={History} name="History" />
+    </HistoryNavigator.Navigator>
+  );
+}
+
 const BottomTabBar = ({ navigation, state }) => (
   <BottomNavigation
     selectedIndex={state.index}
@@ -82,7 +121,6 @@ const BottomTabBar = ({ navigation, state }) => (
     <BottomNavigationTab title="Home" icon={HomeIcon} />
     <BottomNavigationTab title="Rank" icon={ChartIcon} />
     <BottomNavigationTab title="Quiz" icon={LayersIcon} />
-    <BottomNavigationTab title="Login" icon={HomeIcon} />
     <BottomNavigationTab title="History" icon={ClockIcon} />
     <BottomNavigationTab title="Profile" icon={PersonIcon} />
   </BottomNavigation>
@@ -90,11 +128,10 @@ const BottomTabBar = ({ navigation, state }) => (
 
 const TabNavigator = () => (
   <Navigator tabBar={(props) => <BottomTabBar {...props} />}>
-    <Screen name="Home" component={Home} />
-    <Screen name="Rank" component={Rank} />
+    <Screen name="Home" component={HomeNavigatorScreen} />
+    <Screen name="Rank" component={RankNavigatorScreen} />
     <Screen name="Quiz" component={QuizNavigatorScreen} />
-    <Screen name="Login" component={Login} />
-    <Screen name="History" component={History} />
+    <Screen name="History" component={HistoryNavigatorScreen} />
     <Screen name="Profile" component={Profile} />
   </Navigator>
 );
@@ -111,8 +148,23 @@ function Main(props) {
   });
 
   if (!fontsLoaded) {
-    return <Spinner />;
+    return (
+      <Layout style={styles.container} level="4">
+        <Layout style={styles.layout} level="4">
+          <Spinner />
+        </Layout>
+      </Layout>
+    );
   }
+
+  if (props.user.user.data) {
+    return (
+      <NavigationContainer>
+        <TabNavigator />
+      </NavigationContainer>
+    );
+  }
+
   return (
     <NavigationContainer>
       <TabNavigator />
@@ -120,4 +172,16 @@ function Main(props) {
   );
 }
 
-export default connect(null, mapDispatchToProps)(Main);
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "column",
+  },
+  layout: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

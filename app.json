@@ -15,17 +15,17 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "bundleIdentifier": "ios.bundleIdentifier",
+      "bundleIdentifier": "example.expo.googlesignin",
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist",
       "config": {
         "googleSignIn": {
-          "reservedClientId": "com.googleusercontent.apps.791360157679-uupo37unef2fm24e96421c67f81mm99f"
+          "reservedClientId": "com.googleusercontent.apps.791360157679-7epca1kl5406ma79dn8dbbiqcqnnumc3"
         }
       }
     },
     "android": {
-      "package": "android.package",
+      "package": "example.expo.googlesignin",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
