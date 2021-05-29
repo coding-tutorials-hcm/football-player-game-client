@@ -60,42 +60,37 @@ function Profile(props) {
         <ScrollView showsVerticalScrollIndicator={false}>
           <Card style={styles.card} header={Home}>
             <Text style={styles.textManual}>
-              The Maldives, officially the Republic of Maldives, is a small
-              country in South Asia, located in the Arabian Sea of the Indian
-              Ocean. It lies southwest of Sri Lanka and India, about 1,000
-              kilometres (620 mi) from the Asian continent
+              On the homepage, there is a list of quizzes from easy to difficult
+              to challenge each player's knowledge.Players just need to click on
+              any set of questions they like to start doing the test.
             </Text>
           </Card>
           <Card style={styles.card} header={Rank}>
             <Text style={styles.textManual}>
-              The Maldives, officially the Republic of Maldives, is a small
-              country in South Asia, located in the Arabian Sea of the Indian
-              Ocean. It lies southwest of Sri Lanka and India, about 1,000
-              kilometres (620 mi) from the Asian continent
+              The ranking page shows the top users who have the highest scores, 
+              ranked from high to low.Users can view the personal information of the top.
+              But this feature will be updated as soon as possible to serve everyone
             </Text>
           </Card>
           <Card style={styles.card} header={Quiz}>
             <Text style={styles.textManual}>
-              The Maldives, officially the Republic of Maldives, is a small
-              country in South Asia, located in the Arabian Sea of the Indian
-              Ocean. It lies southwest of Sri Lanka and India, about 1,000
-              kilometres (620 mi) from the Asian continent
+              The quiz page is like the home page, users will choose a set of questions that
+              match their knowledge to do.Each set of questions has 10 questions, 
+              for easy and medium levels, choose the answer A, B, C, and D, if it is difficult, 
+              you must enter the answer.
             </Text>
           </Card>
           <Card style={styles.card} header={History}>
             <Text style={styles.textManual}>
-              The Maldives, officially the Republic of Maldives, is a small
-              country in South Asia, located in the Arabian Sea of the Indian
-              Ocean. It lies southwest of Sri Lanka and India, about 1,000
-              kilometres (620 mi) from the Asian continent
+              The history page stores the question sets done each day. 
+              Users can review which sentences are true or false
             </Text>
           </Card>
           <Card style={styles.card} header={User}>
             <Text style={styles.textManual}>
-              The Maldives, officially the Republic of Maldives, is a small
-              country in South Asia, located in the Arabian Sea of the Indian
-              Ocean. It lies southwest of Sri Lanka and India, about 1,000
-              kilometres (620 mi) from the Asian continent
+              The profile page stores the logged in user avatar, 
+              username and total score of quizzes that person has and adds instructions for use 
+              at the bottom, if you are a new user, you can read to know how to use the app
             </Text>
           </Card>
         </ScrollView>
@@ -144,6 +139,7 @@ const styles = StyleSheet.create({
   },
   textManual: {
     textAlign: "justify",
+
   },
 });
 
