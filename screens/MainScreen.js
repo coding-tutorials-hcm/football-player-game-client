@@ -165,11 +165,7 @@ function Main(props) {
     );
   }
 
-  return (
-    <NavigationContainer>
-      <TabNavigator />
-    </NavigationContainer>
-  );
+  return <Login />;
 }
 
 const styles = StyleSheet.create({

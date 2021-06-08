@@ -91,7 +91,6 @@ export const createUser = (data) => (dispatch) => {
 };
 
 export const updateUser = (id, data) => (dispatch) => {
-  alert(id);
   return axios
     .patch(baseUrl + `users`, data)
     .then((response) => {

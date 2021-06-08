@@ -37,9 +37,19 @@ const compare = (array, value) => {
 const checkPoint = (test, answers) => {
   let point = 0;
   for (const [index, answer] of answers.entries()) {
-    if (test[index]) {
-      if (test[index].answer.Answer[answer].correct) {
-        point += 10;
+    if (test.questions[index]) {
+      if (typeof answer == "number") {
+        if (test.questions[index].answer.Answer[answer].correct) {
+          point += 10;
+        }
+      }
+
+      if (typeof answer == "string") {
+        if (test.questions[index].answer) {
+          if (test.questions[index].answer.localeCompare(answer) == 0) {
+            point += 10;
+          }
+        }
       }
     }
   }
@@ -55,7 +65,7 @@ let screenWidth = Dimensions.get("window").width;
 let screenHeight = Dimensions.get("window").height;
 
 function QuizContainer(props) {
-  const [test, setTest] = useState({});
+  const [test, setTest] = useState([]);
   const [offsetX, setOffsetX] = useState(0);
   const [scroll, setScroll] = useState(null);
   const [buttonFlag, setButtonFlag] = useState(false);
@@ -152,6 +162,7 @@ function QuizContainer(props) {
                         offset={offsetX}
                         callback={callback}
                         keyIndex={key}
+                        rank={test.rank}
                       />
                     </View>
                   );
@@ -170,6 +181,7 @@ function QuizContainer(props) {
                       offset={offsetX}
                       callback={callback}
                       keyIndex={key}
+                      rank={test.rank}
                     />
                   </View>
                 );
@@ -190,10 +202,6 @@ function QuizContainer(props) {
                     setTimeEnd(Date.now());
                     pauseSound();
                     submitTest(user);
-                  }
-
-                  if (!sound) {
-                    playSound();
                   }
                   scroll.scrollTo({ x: offsetX + screenWidth });
                 }}

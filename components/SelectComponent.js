@@ -21,15 +21,28 @@ export default function SelectComponent(props) {
   return (
     <Layout style={styles.container}>
       <Layout style={styles.layout} level="4">
-        <Image
-          source={{
-            uri: `${baseUrl + props.data["image_url"]}`,
-          }}
-          style={{
-            width: screenWidth - 40,
-            height: 200,
-          }}
-        />
+        {props.rank == 1 ? (
+          <Image
+            blurRadius={5}
+            source={{
+              uri: `${baseUrl + props.data["image_url"]}`,
+            }}
+            style={{
+              width: screenWidth - 40,
+              height: 200,
+            }}
+          />
+        ) : (
+          <Image
+            source={{
+              uri: `${baseUrl + props.data["image_url"]}`,
+            }}
+            style={{
+              width: screenWidth - 40,
+              height: 200,
+            }}
+          />
+        )}
         <Text category="h6" style={styles.question}>
           {props.data.title}
         </Text>
